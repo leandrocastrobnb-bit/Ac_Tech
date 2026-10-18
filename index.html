@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AC Tech Store — Cell Phone & Repair | Assistência Técnica</title>
+<meta name="description" content="Seu celular como novo: troca de tela, bateria e tampa traseira com orçamento grátis. Segunda a sábado das 08:00 às 18:00.">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>
+tailwind.config={theme:{extend:{colors:{brand:{red:'#ef4444',redDark:'#dc2626',bg:'#0a0a0c',card:'#141418',border:'rgba(255,255,255,0.08)'}}}}}
+</script>
+<style>
+:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 4.5rem)}
+body{background-color:#0a0a0c;background-image:radial-gradient(circle at 20% 15%,rgba(239,68,68,.08) 0,transparent 40%),radial-gradient(circle at 80% 80%,rgba(220,38,38,.05) 0,transparent 40%)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:#0a0a0c;z-index:60}
+header{top:env(safe-area-inset-top,0px)}
+</style>
+</head>
+<body class="bg-brand-bg text-gray-100 font-sans min-h-screen flex flex-col antialiased selection:bg-brand-red selection:text-white">
+
+<header class="sticky z-50 bg-[#0a0a0c]/90 backdrop-blur-md border-b border-white/10">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <a href="#inicio" class="flex items-center gap-3 group">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-red to-red-800 flex items-center justify-center font-black text-xl text-white shadow-lg shadow-brand-red/20 group-hover:scale-105 transition-transform">AC</div>
+      <div class="leading-tight">
+        <span class="block text-sm font-black tracking-wider text-white">AC TECH STORE</span>
+        <span class="block text-[10px] font-semibold tracking-widest text-brand-red uppercase">Cell Phone & Repair</span>
+      </div>
+    </a>
+    <nav class="hidden md:flex items-center gap-1">
+      <a href="#inicio" class="px-3.5 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-lg">Início</a>
+      <a href="#horario" class="px-3.5 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-lg">Horário</a>
+      <a href="#orcamento" class="px-3.5 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-lg">Orçamento</a>
+      <a href="#sobre" class="px-3.5 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-lg">Sobre</a>
+      <a href="#contato" class="px-3.5 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-lg">Contato</a>
+      <a data-wa="" href="#" class="ml-3 px-4 py-2 text-sm font-bold bg-brand-red hover:bg-brand-redDark text-white rounded-lg shadow-md shadow-brand-red/20">Pedir Orçamento</a>
+    </nav>
+    <button id="menuBtn" aria-label="Abrir menu" aria-expanded="false" class="md:hidden p-2 rounded-lg border border-brand-border text-gray-300 hover:text-white">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+  <div id="mobileMenu" class="hidden md:hidden border-t border-white/10 bg-[#0a0a0c] px-4 py-3 space-y-1">
+    <a href="#inicio" class="block px-3 py-2 text-sm text-gray-300 rounded-lg hover:bg-white/5">Início</a>
+    <a href="#horario" class="block px-3 py-2 text-sm text-gray-300 rounded-lg hover:bg-white/5">Horário</a>
+    <a href="#orcamento" class="block px-3 py-2 text-sm text-gray-300 rounded-lg hover:bg-white/5">Orçamento</a>
+    <a href="#sobre" class="block px-3 py-2 text-sm text-gray-300 rounded-lg hover:bg-white/5">Sobre</a>
+    <a href="#contato" class="block px-3 py-2 text-sm text-gray-300 rounded-lg hover:bg-white/5">Contato</a>
+    <a data-wa="" href="#" class="block mt-2 text-center px-4 py-2.5 text-sm font-bold bg-brand-red text-white rounded-lg">Pedir Orçamento</a>
+  </div>
+</header>
+
+<section id="inicio" class="py-16 sm:py-24 border-b border-brand-border overflow-hidden">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-12 items-center">
+    <div class="text-center md:text-left">
+      <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-brand-red/10 border border-brand-red/30 text-brand-red">
+        <span class="w-2 h-2 rounded-full bg-brand-red animate-pulse"></span>Assistência Técnica Especializada
+      </span>
+      <h1 class="mt-6 text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">Seu celular <span class="text-brand-red">como novo</span> nas mãos certas.</h1>
+      <p class="mt-5 text-gray-400 text-base sm:text-lg max-w-xl mx-auto md:mx-0 leading-relaxed">Troca de tela, bateria e tampa traseira com peças de procedência, checklist completo e diagnóstico sem custo.</p>
+      <div class="mt-8 flex flex-wrap gap-4 justify-center md:justify-start">
+        <a data-wa="" href="#" class="px-6 py-3.5 bg-brand-red hover:bg-brand-redDark text-white font-bold rounded-xl shadow-lg shadow-brand-red/25 hover:-translate-y-0.5 transition-all">Orçamento no WhatsApp</a>
+        <a href="#orcamento" class="px-6 py-3.5 bg-white/5 hover:bg-white/10 text-white font-semibold rounded-xl border border-brand-border">Ver Catálogo</a>
+      </div>
+    </div>
+    <div class="flex justify-center">
+      <div class="w-full max-w-sm rounded-3xl bg-brand-card border border-brand-border p-8 shadow-2xl relative">
+        <div class="absolute -top-3 -right-3 bg-brand-red text-white text-xs font-black uppercase px-3 py-1 rounded-full shadow">Orçamento Grátis</div>
+        <div class="w-16 h-16 rounded-2xl bg-brand-red/10 border border-brand-red/30 flex items-center justify-center text-brand-red mb-6">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+        </div>
+        <h2 class="text-xl font-black">AC Tech Store</h2>
+        <p class="text-xs text-gray-400 mt-1 uppercase tracking-widest font-semibold">Cell Phone & Repair</p>
+        <div class="mt-6 space-y-3 pt-6 border-t border-brand-border text-sm">
+          <div class="flex justify-between"><span class="text-gray-400">Atendimento</span><span class="font-bold text-green-400">08:00 às 18:00</span></div>
+          <div class="flex justify-between"><span class="text-gray-400">Diagnóstico</span><span class="font-bold">Na hora</span></div>
+          <div class="flex justify-between"><span class="text-gray-400">Garantia</span><span class="font-bold text-brand-red">90 a 365 dias</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-10 bg-black/40 border-b border-brand-border">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-3 gap-6" id="trust"></div>
+</section>
+
+<section id="horario" class="py-16 sm:py-20 max-w-4xl mx-auto px-4 sm:px-6 w-full">
+  <div class="text-center mb-10">
+    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brand-red">Horário de funcionamento</p>
+    <h2 class="mt-2 text-3xl sm:text-4xl font-extrabold tracking-tight">Estamos abertos de <span class="text-brand-red">segunda a sábado</span></h2>
+    <p class="mt-3 text-gray-400 text-sm sm:text-base max-w-lg mx-auto">Traga seu aparelho durante nosso expediente para diagnóstico e reparo imediato.</p>
+  </div>
+  <div class="rounded-3xl border border-brand-border bg-brand-card overflow-hidden shadow-xl">
+    <div class="flex items-center justify-between border-b border-brand-border px-6 py-4 bg-white/[0.02]">
+      <span class="text-xs font-bold uppercase tracking-wider text-gray-300">Dias da Semana</span>
+      <span id="openNow" class="inline-flex items-center gap-2 rounded-full bg-green-500/10 px-3 py-1 text-xs font-semibold text-green-400 border border-green-500/20"><span class="w-2 h-2 rounded-full bg-green-400"></span>08:00 às 18:00</span>
+    </div>
+    <ul id="hours" class="divide-y divide-white/5 text-sm"></ul>
+  </div>
+</section>
+
+<section id="orcamento" class="py-16 sm:py-20 bg-black/30 border-y border-brand-border">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="text-center max-w-2xl mx-auto">
+      <span class="inline-block px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-brand-red text-white">Tabela Promocional</span>
+      <h2 class="mt-4 text-3xl sm:text-4xl font-extrabold tracking-tight">Catálogo de <span class="text-brand-red">Orçamento</span></h2>
+      <p class="mt-3 text-gray-400 text-sm sm:text-base">Valores de referência. Toque em “Orçar” para pedir pelo WhatsApp com o modelo já preenchido. O valor final é confirmado após avaliação gratuita.</p>
+    </div>
+    <div id="tabs" class="mt-10 flex flex-wrap justify-center gap-2" role="tablist"></div>
+    <div id="panes"></div>
+  </div>
+</section>
+
+<section id="sobre" class="py-16 sm:py-24 max-w-6xl mx-auto px-4 sm:px-6">
+  <div class="grid md:grid-cols-2 gap-12 items-center">
+    <div>
+      <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brand-red">Sobre a AC Tech Store</p>
+      <h2 class="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight leading-snug">Uma bancada na qual você <span class="text-brand-red">pode confiar</span></h2>
+      <p class="mt-5 text-gray-400 text-sm sm:text-base leading-relaxed"><strong class="text-white">AC Tech Store Cell Phone & Repair</strong> é especializada em assistência técnica de alto padrão. Cada aparelho passa por um rigoroso processo de conferência: diagnóstico na hora, peças de alta qualidade e orçamento transparente antes de qualquer serviço.</p>
+      <p class="mt-3 text-gray-400 text-sm sm:text-base leading-relaxed">Trabalhamos com equipamentos de precisão para troca de tampa traseira a laser e reposição de módulos sem danificar o chassi ou os sensores do seu smartphone.</p>
+      <a data-wa="" href="#" class="mt-8 inline-block px-6 py-3 bg-brand-red hover:bg-brand-redDark text-white font-bold rounded-xl shadow-lg shadow-brand-red/20">Solicitar Avaliação</a>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-1 gap-4">
+      <div class="rounded-2xl border border-brand-border bg-brand-card p-6 text-center"><p class="text-3xl font-black text-brand-red">90 a 365 dias</p><p class="text-xs uppercase tracking-wider text-gray-400 mt-1 font-semibold">Garantia em todos os reparos</p></div>
+      <div class="rounded-2xl border border-brand-border bg-brand-card p-6 text-center"><p class="text-4xl font-black">15 min</p><p class="text-xs uppercase tracking-wider text-gray-400 mt-1 font-semibold">Diagnóstico ágil no balcão</p></div>
+      <div class="rounded-2xl border border-brand-border bg-brand-card p-6 text-center"><p class="text-4xl font-black text-brand-red">R$ 0</p><p class="text-xs uppercase tracking-wider text-gray-400 mt-1 font-semibold">Orçamento sem compromisso</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="contato" class="py-16 sm:py-20 bg-black/30 border-t border-brand-border">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-10">
+      <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brand-red">Contato</p>
+      <h2 class="mt-2 text-3xl sm:text-4xl font-extrabold tracking-tight">Fale com a <span class="text-brand-red">AC Tech Store</span></h2>
+    </div>
+    <div id="contactCards" class="grid sm:grid-cols-2 gap-4"></div>
+  </div>
+</section>
+
+<footer class="mt-auto border-t border-white/10 bg-black py-8">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left text-xs text-gray-500">
+    <p><span class="font-bold text-gray-300">AC TECH STORE</span> · Cell Phone & Repair © 2026. Todos os direitos reservados.</p>
+    <div class="flex gap-4"><a href="#inicio" class="hover:text-brand-red">Voltar ao topo</a><a href="#horario" class="hover:text-brand-red">Horário</a><a href="#orcamento" class="hover:text-brand-red">Orçamento</a><a href="#contato" class="hover:text-brand-red">Contato</a></div>
+  </div>
+</footer>
+
+<a data-wa="" href="#" aria-label="Chamar no WhatsApp" class="fixed right-4 z-40 w-14 h-14 rounded-full bg-green-500 hover:bg-green-400 text-white flex items-center justify-center shadow-xl shadow-black/40 transition-colors" style="bottom:calc(env(safe-area-inset-bottom,0px) + 1rem)">
+  <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21l1.65-4.9A8.5 8.5 0 1112 20.5a8.4 8.4 0 01-4.1-1.1L3 21z"/></svg>
+</a>
+
+<script>
+// ===== CONFIGURAÇÃO — edite aqui =====
+const CONFIG = {
+  whatsapp: "5598982197417",   // DDI+DDD+número, só dígitos. Ex.: 5511999998888
+  address:  "",                // Ex.: "Rua Exemplo, 123 – Centro, Cidade/UF"
+  instagram:"",                // Ex.: "https://instagram.com/seuperfil"
+  facebook: "",                // opcional
+  tiktok:   ""                 // opcional
+};
+// Preços por modelo: t = tampa, s = tela, b = bateria. null = "Consultar".
+const MODELS = [
+ ["iPhone XR",250,null,null],["iPhone XS",250,null,null],["iPhone XS Max",260,null,null],
+ ["iPhone 11",250,null,null],["iPhone 11 Pro",280,null,null],["iPhone 11 Pro Max",280,null,null],
+ ["iPhone 12",280,null,null],["iPhone 12 Pro",280,null,null],["iPhone 12 Pro Max",290,null,null],
+ ["iPhone 13",300,null,null],["iPhone 13 Pro",300,null,null],["iPhone 13 Pro Max",330,null,null],
+ ["iPhone 14",300,null,null],["iPhone 14 Pro",350,null,null],["iPhone 14 Pro Max",390,null,null],
+ ["iPhone 15",350,null,null],["iPhone 15 Pro",350,null,null],["iPhone 15 Pro Max",390,null,null],
+ ["iPhone 16",390,null,null],["iPhone 16E",390,null,null],["iPhone 16 Pro",400,null,null],["iPhone 16 Pro Max",480,null,null],
+ ["iPhone 17",390,null,null],["iPhone 17E",390,null,null],["iPhone 17 Air",500,null,null],["iPhone 17 Pro",450,null,null],["iPhone 17 Pro Max",550,null,null]
+].map(([m,t,s,b])=>({m,t,s,b,br:"Apple"}));
+const ANDROID = {
+ Samsung:["Galaxy A05","Galaxy A05s","Galaxy A06","Galaxy A15","Galaxy A16","Galaxy A25","Galaxy A26","Galaxy A35","Galaxy A36","Galaxy A55","Galaxy A56","Galaxy M15","Galaxy M35","Galaxy S21","Galaxy S21+","Galaxy S21 Ultra","Galaxy S21 FE","Galaxy S22","Galaxy S22+","Galaxy S22 Ultra","Galaxy S23","Galaxy S23+","Galaxy S23 Ultra","Galaxy S23 FE","Galaxy S24","Galaxy S24+","Galaxy S24 Ultra","Galaxy S24 FE","Galaxy S25","Galaxy S25+","Galaxy S25 Ultra","Galaxy Z Flip5","Galaxy Z Flip6","Galaxy Z Fold5","Galaxy Z Fold6"],
+ Xiaomi:["12","12T","13","13T","13T Pro","14","14T","14T Pro","15","Poco F5","Poco F6","Poco F6 Pro","Poco X6 Pro","Poco X7 Pro"],
+ Realme:["C53","C55","C61","C63","C67","11","12","Note 50"],
+ Redmi:["12","12C","13","13C","14C","A3","Note 12","Note 13","Note 13 Pro","Note 14","Note 14 Pro"],
+ LG:["K22","K41S","K42","K50S","K51S","K52","K61","K62"],
+ Motorola:["Moto E22","Moto G04","Moto G05","Moto G14","Moto G15","Moto G24","Moto G34","Moto G35","Moto G54","Moto G55","Moto G84","Moto G85","Edge 40 Neo","Edge 50 Fusion"]
+};
+Object.entries(ANDROID).forEach(([br,l]) => l.forEach(x => MODELS.push({m:br+" "+x,t:null,s:null,b:null,br})));
+// ======================================
+
+const SERVICES = [
+ {id:"t",tab:"Tampa Traseira",name:"Troca de Tampa Traseira",sub:"Modelos iPhone com acabamento a laser",badge:"Laser de Precisão"},
+ {id:"s",tab:"Troca de Tela",name:"Troca de Módulo de Tela",sub:"Displays originais e primeira linha premium",badge:"A partir de R$ 200"},
+ {id:"b",tab:"Troca de Bateria",name:"Substituição de Bateria",sub:"Baterias homologadas com 100% de saúde e garantia",badge:"A partir de R$ 120"}
+];
+const OTHERS = [
+ ["Conector de Carga","Reparo do dock de carregamento e dados"],
+ ["Câmera Traseira ou Frontal","Troca de lente trincada ou sensor de foco"],
+ ["Dano por Líquido / Banho Químico","Desoxidação e secagem completa de placa"],
+ ["Alto-falante e Microfone","Limpeza e troca de componentes de áudio"],
+ ["Reparos de Placa e Software","Restauração, desbloqueio de loop e micro-solda"],
+ ["Botões e Carcaça","Botão Power, Volume, Action Button e chassi"]
+];
+const TRUST = [
+ ["Acabamento Seguro","Troca com peças de alta qualidade","M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"],
+ ["Checklist Completo","Testes rigorosos antes e após o serviço","M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"],
+ ["Película de Brinde","Seu iPhone protegido e pronto para uso","M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"]
+];
+const DAYS = ["Domingo","Segunda-feira","Terça-feira","Quarta-feira","Quinta-feira","Sexta-feira","Sábado"];
+const $ = s => document.querySelector(s);
+
+function waLink(msg){
+  return "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(msg || "Olá! Gostaria de pedir um orçamento.");
+}
+function waBtn(msg){ return waLink(msg); }
+function brl(v){ return "R$ " + v.toLocaleString("pt-BR"); }
+
+// Links gerais de WhatsApp
+document.querySelectorAll("[data-wa]").forEach(a => {
+  a.href = waLink(); a.target = "_blank"; a.rel = "noopener";
+});
+
+// Faixa de confiança
+$("#trust").innerHTML = TRUST.map(([t,d,p]) => `
+  <div class="flex items-center gap-4 p-4 rounded-2xl bg-brand-card/40 border border-brand-border">
+    <div class="w-12 h-12 rounded-xl bg-brand-red/10 text-brand-red flex items-center justify-center shrink-0">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${p}"/></svg>
+    </div>
+    <div><h3 class="font-bold text-white text-sm">${t}</h3><p class="text-xs text-gray-400 mt-0.5">${d}</p></div>
+  </div>`).join("");
+
+// Horários (destaca o dia de hoje)
+const today = new Date().getDay();
+$("#hours").innerHTML = [1,2,3,4,5,6,0].map(d => {
+  const open = d !== 0, now = d === today;
+  return `<li class="flex items-center justify-between px-6 py-3.5 ${now ? "bg-brand-red/5" : ""} ${open ? "" : "text-gray-500"}">
+    <span class="font-medium">${DAYS[d]}${now ? ' <span class="ml-2 text-[10px] uppercase tracking-wider text-brand-red font-bold">hoje</span>' : ""}</span>
+    <span class="font-bold ${open ? "text-brand-red" : "text-gray-500"}">${open ? "08:00 – 18:00" : "Fechado"}</span></li>`;
+}).join("");
+(function(){
+  const h = new Date().getHours(), open = today !== 0 && h >= 8 && h < 18, el = $("#openNow");
+  el.lastChild.textContent = open ? "Aberto agora · até 18:00" : "Fechado agora · 08:00 às 18:00";
+  if(!open){ el.className = el.className.replace(/green/g,"gray"); }
+})();
+
+// Catálogo
+function row(s, m){
+  const price = m[s.id];
+  const msg = `Olá! Gostaria de um orçamento de ${s.name.toLowerCase()} para o ${m.m}.`;
+  return `<li class="flex items-center justify-between gap-3 py-2.5 text-sm">
+    <span class="font-medium text-gray-200">${m.m}</span>
+    <span class="flex items-center gap-2">
+      ${price != null ? `<span class="font-bold text-brand-red">${brl(price)}</span>` : `<span class="text-xs font-semibold text-gray-400 bg-white/5 px-2.5 py-1 rounded-md">Consultar</span>`}
+      <a href="${waBtn(msg)}" target="_blank" rel="noopener" class="text-xs font-bold px-2.5 py-1 rounded-md bg-green-500/10 text-green-400 border border-green-500/20 hover:bg-green-500/20">Orçar</a>
+    </span></li>`;
+}
+function list(s, br){
+  const list = MODELS.filter(m => (m.t != null || s.id !== "t") && (!br || m.br === br));
+  const mid = Math.ceil(list.length / 2);
+  const col = a => `<ul class="divide-y divide-white/5">${a.map(m => row(s, m)).join("")}</ul>`;
+  return `<div class="grid md:grid-cols-2 gap-x-12">${col(list.slice(0, mid))}${col(list.slice(mid))}</div>`;
+}
+const chipCls = on => "px-3.5 py-1.5 rounded-full text-xs transition-all " + (on ? "bg-brand-red text-white font-bold" : "border border-brand-border bg-white/5 text-gray-400 hover:text-white font-semibold");
+function chips(s){
+  if(s.id === "t") return "";
+  const bs = ["Todas", ...new Set(MODELS.map(m => m.br))];
+  return `<div class="flex flex-wrap gap-2 mb-5" data-chips="${s.id}">${bs.map((b,i) => `<button data-br="${i ? b : ""}" class="${chipCls(i === 0)}">${b}</button>`).join("")}</div>`;
+}
+$("#panes").addEventListener("click", e => {
+  const c = e.target.closest("[data-br]"); if(!c) return;
+  const w = c.closest("[data-chips]"), s = SERVICES.find(x => x.id === w.dataset.chips);
+  w.querySelectorAll("button").forEach(b => b.className = chipCls(b === c));
+  w.nextElementSibling.innerHTML = list(s, c.dataset.br);
+});
+const tabs = [...SERVICES.map(s => ({id:s.id, label:s.tab})), {id:"o", label:"Outros Reparos"}];
+$("#tabs").innerHTML = tabs.map(t => `<button role="tab" data-tab="${t.id}" class="tab-btn px-5 py-2.5 rounded-xl text-sm transition-all">${t.label}</button>`).join("");
+$("#panes").innerHTML = SERVICES.map(s => `
+  <div data-pane="${s.id}" role="tabpanel" class="mt-8"><div class="rounded-3xl border border-brand-border bg-brand-card p-6 sm:p-8 shadow-xl">
+    <div class="mb-6 flex flex-wrap justify-between items-center gap-3 border-b border-brand-border pb-4">
+      <div><h3 class="font-bold text-lg text-white">${s.name}</h3><p class="text-xs text-gray-400">${s.sub}</p></div>
+      <span class="text-xs font-bold text-brand-red bg-brand-red/10 border border-brand-red/30 px-3 py-1.5 rounded-full">${s.badge}</span>
+    </div>${chips(s)}<div>${list(s)}</div></div></div>`).join("") + `
+  <div data-pane="o" role="tabpanel" class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    ${OTHERS.map(([t,d]) => `<a href="${waBtn("Olá! Gostaria de um orçamento para: " + t + ".")}" target="_blank" rel="noopener" class="block rounded-2xl border border-brand-border bg-brand-card p-5 hover:border-brand-red/40 transition-colors">
+      <h4 class="font-bold text-base text-white">${t}</h4><p class="text-xs text-gray-400 mt-1">${d}</p>
+      <p class="mt-4 text-xs font-bold text-brand-red uppercase tracking-wider">Sob consulta · pedir orçamento →</p></a>`).join("")}
+  </div>`;
+
+function switchTab(id){
+  document.querySelectorAll("[data-pane]").forEach(p => p.classList.toggle("hidden", p.dataset.pane !== id));
+  document.querySelectorAll(".tab-btn").forEach(b => {
+    const on = b.dataset.tab === id;
+    b.setAttribute("aria-selected", on);
+    b.className = "tab-btn px-5 py-2.5 rounded-xl text-sm transition-all " + (on ? "bg-brand-red text-white font-bold" : "border border-brand-border bg-brand-card text-gray-400 hover:text-white font-semibold");
+  });
+}
+$("#tabs").addEventListener("click", e => { const b = e.target.closest("[data-tab]"); if(b) switchTab(b.dataset.tab); });
+switchTab("t");
+
+// Contato
+const ico = {
+  wa:"M3 21l1.65-4.9A8.5 8.5 0 1112 20.5a8.4 8.4 0 01-4.1-1.1L3 21z",
+  pin:"M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z",
+  ig:"M7 3h10a4 4 0 014 4v10a4 4 0 01-4 4H7a4 4 0 01-4-4V7a4 4 0 014-4zm5 5a4 4 0 100 8 4 4 0 000-8zm5.5-1.5h.01",
+  link:"M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+};
+function card(icon, title, text, href){
+  return `<a href="${href}" target="_blank" rel="noopener" class="flex items-center gap-4 p-5 rounded-2xl border border-brand-border bg-brand-card hover:border-brand-red/40 transition-colors">
+    <div class="w-12 h-12 rounded-xl bg-brand-red/10 text-brand-red flex items-center justify-center shrink-0"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${ico[icon]}"/></svg></div>
+    <div class="min-w-0"><h3 class="font-bold text-white text-sm">${title}</h3><p class="text-xs text-gray-400 mt-0.5 break-words">${text}</p></div></a>`;
+}
+const cards = [card("wa","WhatsApp","Peça seu orçamento agora",waLink())];
+if(CONFIG.address) cards.push(card("pin","Endereço",CONFIG.address,"https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(CONFIG.address)));
+if(CONFIG.instagram) cards.push(card("ig","Instagram","Acompanhe nosso trabalho",CONFIG.instagram));
+if(CONFIG.facebook) cards.push(card("link","Facebook","Siga nossa página",CONFIG.facebook));
+if(CONFIG.tiktok) cards.push(card("link","TikTok","Veja nossos reparos",CONFIG.tiktok));
+$("#contactCards").innerHTML = cards.join("");
+
+// Menu mobile
+const mm = $("#mobileMenu"), mb = $("#menuBtn");
+function toggleMenu(){ mm.classList.toggle("hidden"); mb.setAttribute("aria-expanded", !mm.classList.contains("hidden")); }
+mb.addEventListener("click", toggleMenu);
+mm.addEventListener("click", e => { if(e.target.closest("a")) toggleMenu(); });
+</script>
+</body>
+</html>
