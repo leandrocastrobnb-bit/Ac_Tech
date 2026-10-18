@@ -154,7 +154,7 @@ header{top:env(safe-area-inset-top,0px)}
 // ===== CONFIGURAÇÃO — edite aqui =====
 const CONFIG = {
   whatsapp: "5598982197417",   // DDI+DDD+número, só dígitos. Ex.: 5511999998888
-  address:  "",                // Ex.: "Rua Exemplo, 123 – Centro, Cidade/UF"
+  address:  "Rua Miguel Couto, Monte Castelo, São Luís",
   instagram:"",                // Ex.: "https://instagram.com/seuperfil"
   facebook: "",                // opcional
   tiktok:   ""                 // opcional
@@ -182,7 +182,7 @@ Object.entries(ANDROID).forEach(([br,l]) => l.forEach(x => MODELS.push({m:br+" "
 // ======================================
 
 const SERVICES = [
- {id:"t",tab:"Tampa Traseira",name:"Troca de Tampa Traseira",sub:"iPhone com acabamento a laser e demais marcas sob consulta",badge:"Laser de Precisão"},
+ {id:"t",tab:"Tampa Traseira",name:"Troca de Tampa Traseira",sub:"Modelos iPhone com acabamento a laser",badge:"Laser de Precisão"},
  {id:"s",tab:"Troca de Tela",name:"Troca de Módulo de Tela",sub:"Displays originais e primeira linha premium",badge:"A partir de R$ 200"},
  {id:"b",tab:"Troca de Bateria",name:"Substituição de Bateria",sub:"Baterias homologadas com 100% de saúde e garantia",badge:"A partir de R$ 120"}
 ];
@@ -248,13 +248,14 @@ function row(s, m){
     </span></li>`;
 }
 function list(s, br){
-  const list = MODELS.filter(m => !br || m.br === br);
+  const list = MODELS.filter(m => (m.t != null || s.id !== "t") && (!br || m.br === br));
   const mid = Math.ceil(list.length / 2);
   const col = a => `<ul class="divide-y divide-white/5">${a.map(m => row(s, m)).join("")}</ul>`;
   return `<div class="grid md:grid-cols-2 gap-x-12">${col(list.slice(0, mid))}${col(list.slice(mid))}</div>`;
 }
 const chipCls = on => "px-3.5 py-1.5 rounded-full text-xs transition-all " + (on ? "bg-brand-red text-white font-bold" : "border border-brand-border bg-white/5 text-gray-400 hover:text-white font-semibold");
 function chips(s){
+  if(s.id === "t") return "";
   const bs = ["Todas", ...new Set(MODELS.map(m => m.br))];
   return `<div class="flex flex-wrap gap-2 mb-5" data-chips="${s.id}">${bs.map((b,i) => `<button data-br="${i ? b : ""}" class="${chipCls(i === 0)}">${b}</button>`).join("")}</div>`;
 }
