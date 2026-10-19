@@ -182,7 +182,7 @@ Object.entries(ANDROID).forEach(([br,l]) => l.forEach(x => MODELS.push({m:br+" "
 // ======================================
 
 const SERVICES = [
- {id:"t",tab:"Tampa Traseira",name:"Troca de Tampa Traseira",sub:"Modelos iPhone com acabamento a laser",badge:"Laser de Precisão"},
+ {id:"t",tab:"Tampa Traseira",name:"Troca de Tampa Traseira",sub:"Modelos iPhone e Android",badge:"A partir de R$ 80"},
  {id:"s",tab:"Troca de Tela",name:"Troca de Módulo de Tela",sub:"Displays originais e primeira linha premium",badge:"A partir de R$ 200"},
  {id:"b",tab:"Troca de Bateria",name:"Substituição de Bateria",sub:"Baterias homologadas com 100% de saúde e garantia",badge:"A partir de R$ 120"}
 ];
@@ -247,23 +247,36 @@ function row(s, m){
       <a href="${waBtn(msg)}" target="_blank" rel="noopener" class="text-xs font-bold px-2.5 py-1 rounded-md bg-green-500/10 text-green-400 border border-green-500/20 hover:bg-green-500/20">Orçar</a>
     </span></li>`;
 }
-function list(s, br){
-  const list = MODELS.filter(m => (m.t != null || s.id !== "t") && (!br || m.br === br));
-  const mid = Math.ceil(list.length / 2);
+function list(s, br, query = ""){
+  const normalizedQuery = query.trim().toLocaleLowerCase("pt-BR");
+  const models = MODELS.filter(m =>
+    (!br || m.br === br) &&
+    (!normalizedQuery || m.m.toLocaleLowerCase("pt-BR").includes(normalizedQuery))
+  );
+  if(!models.length) return `<p class="py-6 text-center text-sm text-gray-400">Nenhum modelo encontrado.</p>`;
+  const mid = Math.ceil(models.length / 2);
   const col = a => `<ul class="divide-y divide-white/5">${a.map(m => row(s, m)).join("")}</ul>`;
-  return `<div class="grid md:grid-cols-2 gap-x-12">${col(list.slice(0, mid))}${col(list.slice(mid))}</div>`;
+  return `<div class="grid md:grid-cols-2 gap-x-12">${col(models.slice(0, mid))}${col(models.slice(mid))}</div>`;
 }
 const chipCls = on => "px-3.5 py-1.5 rounded-full text-xs transition-all " + (on ? "bg-brand-red text-white font-bold" : "border border-brand-border bg-white/5 text-gray-400 hover:text-white font-semibold");
 function chips(s){
   if(s.id === "t") return "";
   const bs = ["Todas", ...new Set(MODELS.map(m => m.br))];
-  return `<div class="flex flex-wrap gap-2 mb-5" data-chips="${s.id}">${bs.map((b,i) => `<button data-br="${i ? b : ""}" class="${chipCls(i === 0)}">${b}</button>`).join("")}</div>`;
+  return `<div class="flex flex-wrap gap-2 mb-5" data-chips="${s.id}" data-selected-br="">${bs.map((b,i) => `<button data-br="${i ? b : ""}" class="${chipCls(i === 0)}">${b}</button>`).join("")}</div>`;
 }
+$("#panes").addEventListener("input", e => {
+  const input = e.target.closest("[data-model-search]");
+  if(!input) return;
+  const pane = input.closest("[data-pane]"), s = SERVICES.find(x => x.id === pane.dataset.pane);
+  const chips = pane.querySelector("[data-chips]");
+  pane.querySelector("[data-model-list]").innerHTML = list(s, chips ? chips.dataset.selectedBr : "", input.value);
+});
 $("#panes").addEventListener("click", e => {
   const c = e.target.closest("[data-br]"); if(!c) return;
   const w = c.closest("[data-chips]"), s = SERVICES.find(x => x.id === w.dataset.chips);
+  w.dataset.selectedBr = c.dataset.br;
   w.querySelectorAll("button").forEach(b => b.className = chipCls(b === c));
-  w.nextElementSibling.innerHTML = list(s, c.dataset.br);
+  w.nextElementSibling.innerHTML = list(s, c.dataset.br, w.parentElement.querySelector("[data-model-search]").value);
 });
 const tabs = [...SERVICES.map(s => ({id:s.id, label:s.tab})), {id:"o", label:"Outros Reparos"}];
 $("#tabs").innerHTML = tabs.map(t => `<button role="tab" data-tab="${t.id}" class="tab-btn px-5 py-2.5 rounded-xl text-sm transition-all">${t.label}</button>`).join("");
@@ -271,8 +284,11 @@ $("#panes").innerHTML = SERVICES.map(s => `
   <div data-pane="${s.id}" role="tabpanel" class="mt-8"><div class="rounded-3xl border border-brand-border bg-brand-card p-6 sm:p-8 shadow-xl">
     <div class="mb-6 flex flex-wrap justify-between items-center gap-3 border-b border-brand-border pb-4">
       <div><h3 class="font-bold text-lg text-white">${s.name}</h3><p class="text-xs text-gray-400">${s.sub}</p></div>
-      <span class="text-xs font-bold text-brand-red bg-brand-red/10 border border-brand-red/30 px-3 py-1.5 rounded-full">${s.badge}</span>
-    </div>${chips(s)}<div>${list(s)}</div></div></div>`).join("") + `
+      ${s.badge ? `<span class="text-xs font-bold text-brand-red bg-brand-red/10 border border-brand-red/30 px-3 py-1.5 rounded-full">${s.badge}</span>` : ""}
+    </div><label class="block mb-5">
+      <span class="sr-only">Pesquisar modelo</span>
+      <input data-model-search="${s.id}" type="search" placeholder="Pesquisar modelo (ex.: iPhone 13, Galaxy A15)" class="w-full rounded-xl border border-brand-border bg-black/30 px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red">
+    </label>${chips(s)}<div data-model-list>${list(s)}</div></div></div>`).join("") + `
   <div data-pane="o" role="tabpanel" class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
     ${OTHERS.map(([t,d]) => `<a href="${waBtn("Olá! Gostaria de um orçamento para: " + t + ".")}" target="_blank" rel="noopener" class="block rounded-2xl border border-brand-border bg-brand-card p-5 hover:border-brand-red/40 transition-colors">
       <h4 class="font-bold text-base text-white">${t}</h4><p class="text-xs text-gray-400 mt-1">${d}</p>
