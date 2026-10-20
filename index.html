@@ -33,6 +33,7 @@ header{top:env(safe-area-inset-top,0px)}
       <a href="#horario" class="px-3.5 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-lg">Horário</a>
       <a href="#orcamento" class="px-3.5 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-lg">Orçamento</a>
       <a href="#sobre" class="px-3.5 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-lg">Sobre</a>
+      <a href="#pagamentos" class="px-3.5 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-lg">Pagamentos</a>
       <a href="#contato" class="px-3.5 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-lg">Contato</a>
       <a data-wa="" href="#" class="ml-3 px-4 py-2 text-sm font-bold bg-brand-red hover:bg-brand-redDark text-white rounded-lg shadow-md shadow-brand-red/20">Pedir Orçamento</a>
     </nav>
@@ -45,6 +46,7 @@ header{top:env(safe-area-inset-top,0px)}
     <a href="#horario" class="block px-3 py-2 text-sm text-gray-300 rounded-lg hover:bg-white/5">Horário</a>
     <a href="#orcamento" class="block px-3 py-2 text-sm text-gray-300 rounded-lg hover:bg-white/5">Orçamento</a>
     <a href="#sobre" class="block px-3 py-2 text-sm text-gray-300 rounded-lg hover:bg-white/5">Sobre</a>
+    <a href="#pagamentos" class="block px-3 py-2 text-sm text-gray-300 rounded-lg hover:bg-white/5">Pagamentos</a>
     <a href="#contato" class="block px-3 py-2 text-sm text-gray-300 rounded-lg hover:bg-white/5">Contato</a>
     <a data-wa="" href="#" class="block mt-2 text-center px-4 py-2.5 text-sm font-bold bg-brand-red text-white rounded-lg">Pedir Orçamento</a>
   </div>
@@ -81,10 +83,6 @@ header{top:env(safe-area-inset-top,0px)}
   </div>
 </section>
 
-<section class="py-10 bg-black/40 border-b border-brand-border">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-3 gap-6" id="trust"></div>
-</section>
-
 <section id="horario" class="py-16 sm:py-20 max-w-4xl mx-auto px-4 sm:px-6 w-full">
   <div class="text-center mb-10">
     <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brand-red">Horário de funcionamento</p>
@@ -119,6 +117,7 @@ header{top:env(safe-area-inset-top,0px)}
       <h2 class="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight leading-snug">Uma bancada na qual você <span class="text-brand-red">pode confiar</span></h2>
       <p class="mt-5 text-gray-400 text-sm sm:text-base leading-relaxed"><strong class="text-white">AC Tech Store Cell Phone & Repair</strong> é especializada em assistência técnica de alto padrão. Cada aparelho passa por um rigoroso processo de conferência: diagnóstico na hora, peças de alta qualidade e orçamento transparente antes de qualquer serviço.</p>
       <p class="mt-3 text-gray-400 text-sm sm:text-base leading-relaxed">Trabalhamos com equipamentos de precisão para troca de tampa traseira a laser e reposição de módulos sem danificar o chassi ou os sensores do seu smartphone.</p>
+      <p class="mt-3 text-gray-400 text-sm sm:text-base leading-relaxed">Após a aprovação do orçamento, emitimos uma nota de serviço com os detalhes do reparo e a garantia oferecida ao cliente.</p>
       <a data-wa="" href="#" class="mt-8 inline-block px-6 py-3 bg-brand-red hover:bg-brand-redDark text-white font-bold rounded-xl shadow-lg shadow-brand-red/20">Solicitar Avaliação</a>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-1 gap-4">
@@ -126,6 +125,23 @@ header{top:env(safe-area-inset-top,0px)}
       <div class="rounded-2xl border border-brand-border bg-brand-card p-6 text-center"><p class="text-4xl font-black">15 min</p><p class="text-xs uppercase tracking-wider text-gray-400 mt-1 font-semibold">Diagnóstico ágil no balcão</p></div>
       <div class="rounded-2xl border border-brand-border bg-brand-card p-6 text-center"><p class="text-4xl font-black text-brand-red">R$ 0</p><p class="text-xs uppercase tracking-wider text-gray-400 mt-1 font-semibold">Orçamento sem compromisso</p></div>
     </div>
+  </div>
+  <div id="trust" class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+</section>
+
+<section id="pagamentos" class="py-16 sm:py-20 bg-black/30 border-y border-brand-border">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-10">
+      <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brand-red">Facilidade para você</p>
+      <h2 class="mt-2 text-3xl sm:text-4xl font-extrabold tracking-tight">Formas de <span class="text-brand-red">pagamento</span></h2>
+      <p class="mt-3 text-gray-400 text-sm sm:text-base">Aceitamos as seguintes formas de pagamento:</p>
+    </div>
+    <ul class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <li class="rounded-2xl border border-brand-border bg-brand-card p-5 text-center font-bold text-white">Pix</li>
+      <li class="rounded-2xl border border-brand-border bg-brand-card p-5 text-center font-bold text-white">Dinheiro</li>
+      <li class="rounded-2xl border border-brand-border bg-brand-card p-5 text-center font-bold text-white">Cartão de débito</li>
+      <li class="rounded-2xl border border-brand-border bg-brand-card p-5 text-center font-bold text-white">Cartão de crédito</li>
+    </ul>
   </div>
 </section>
 
@@ -142,7 +158,7 @@ header{top:env(safe-area-inset-top,0px)}
 <footer class="mt-auto border-t border-white/10 bg-black py-8">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left text-xs text-gray-500">
     <p><span class="font-bold text-gray-300">AC TECH STORE</span> · Cell Phone & Repair © 2026. Todos os direitos reservados.</p>
-    <div class="flex gap-4"><a href="#inicio" class="hover:text-brand-red">Voltar ao topo</a><a href="#horario" class="hover:text-brand-red">Horário</a><a href="#orcamento" class="hover:text-brand-red">Orçamento</a><a href="#contato" class="hover:text-brand-red">Contato</a></div>
+    <div class="flex gap-4"><a href="#inicio" class="hover:text-brand-red">Voltar ao topo</a><a href="#horario" class="hover:text-brand-red">Horário</a><a href="#orcamento" class="hover:text-brand-red">Orçamento</a><a href="#pagamentos" class="hover:text-brand-red">Pagamentos</a><a href="#contato" class="hover:text-brand-red">Contato</a></div>
   </div>
 </footer>
 
