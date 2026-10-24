@@ -177,20 +177,73 @@ const CONFIG = {
 const MODELS = [
  ["iPhone XR",250,null,null],["iPhone XS",250,null,null],["iPhone XS Max",260,null,null],
  ["iPhone 11",250,null,null],["iPhone 11 Pro",280,null,null],["iPhone 11 Pro Max",280,null,null],
- ["iPhone 12",280,null,null],["iPhone 12 Pro",280,null,null],["iPhone 12 Pro Max",290,null,null],
- ["iPhone 13",300,null,null],["iPhone 13 Pro",300,null,null],["iPhone 13 Pro Max",330,null,null],
- ["iPhone 14",300,null,null],["iPhone 14 Pro",350,null,null],["iPhone 14 Pro Max",390,null,null],
- ["iPhone 15",350,null,null],["iPhone 15 Pro",350,null,null],["iPhone 15 Pro Max",390,null,null],
- ["iPhone 16",390,null,null],["iPhone 16E",390,null,null],["iPhone 16 Pro",400,null,null],["iPhone 16 Pro Max",480,null,null],
- ["iPhone 17",390,null,null],["iPhone 17E",390,null,null],["iPhone 17 Air",500,null,null],["iPhone 17 Pro",450,null,null],["iPhone 17 Pro Max",550,null,null]
+ ["iPhone SE (2ª geração)",null,null,null],["iPhone 12 mini",null,null,null],["iPhone 12",280,null,null],["iPhone 12 Pro",null,null,null],["iPhone 12 Pro Max",290,null,null],
+ ["iPhone 13 mini",null,null,null],["iPhone 13",300,null,null],["iPhone 13 Pro",300,null,null],["iPhone 13 Pro Max",330,null,null],["iPhone SE (3ª geração)",null,null,null],
+ ["iPhone 14",300,null,null],["iPhone 14 Plus",null,null,null],["iPhone 14 Pro",350,null,null],["iPhone 14 Pro Max",390,null,null],
+ ["iPhone 15",350,null,null],["iPhone 15 Plus",null,null,null],["iPhone 15 Pro",350,null,null],["iPhone 15 Pro Max",390,null,null],
+ ["iPhone 16",390,null,null],["iPhone 16 Plus",null,null,null],["iPhone 16e",390,null,null],["iPhone 16 Pro",400,null,null],["iPhone 16 Pro Max",480,null,null],
+ ["iPhone 17",390,null,null],["iPhone 17e",390,null,null],["iPhone Air",500,null,null],["iPhone 17 Pro",450,null,null],["iPhone 17 Pro Max",550,null,null]
 ].map(([m,t,s,b])=>({m,t,s,b,br:"Apple"}));
 const ANDROID = {
- Samsung:["Galaxy A05","Galaxy A05s","Galaxy A06","Galaxy A15","Galaxy A16","Galaxy A25","Galaxy A26","Galaxy A35","Galaxy A36","Galaxy A55","Galaxy A56","Galaxy M15","Galaxy M35","Galaxy S21","Galaxy S21+","Galaxy S21 Ultra","Galaxy S21 FE","Galaxy S22","Galaxy S22+","Galaxy S22 Ultra","Galaxy S23","Galaxy S23+","Galaxy S23 Ultra","Galaxy S23 FE","Galaxy S24","Galaxy S24+","Galaxy S24 Ultra","Galaxy S24 FE","Galaxy S25","Galaxy S25+","Galaxy S25 Ultra","Galaxy Z Flip5","Galaxy Z Flip6","Galaxy Z Fold5","Galaxy Z Fold6"],
- Xiaomi:["12","12T","13","13T","13T Pro","14","14T","14T Pro","15","Poco F5","Poco F6","Poco F6 Pro","Poco X6 Pro","Poco X7 Pro"],
- Realme:["C53","C55","C61","C63","C67","11","12","Note 50"],
- Redmi:["12","12C","13","13C","14C","A3","Note 12","Note 13","Note 13 Pro","Note 14","Note 14 Pro"],
- LG:["K22","K41S","K42","K50S","K51S","K52","K61","K62"],
- Motorola:["Moto E22","Moto G04","Moto G05","Moto G14","Moto G15","Moto G24","Moto G34","Moto G35","Moto G54","Moto G55","Moto G84","Moto G85","Edge 40 Neo","Edge 50 Fusion"]
+ Samsung:[
+  "Galaxy A01","Galaxy A01 Core","Galaxy A02","Galaxy A02s","Galaxy A03","Galaxy A03 Core","Galaxy A03s","Galaxy A04","Galaxy A04e","Galaxy A04s","Galaxy A05","Galaxy A05s","Galaxy A06","Galaxy A07",
+  "Galaxy A10s","Galaxy A11","Galaxy A12","Galaxy A13","Galaxy A14","Galaxy A15","Galaxy A16","Galaxy A17",
+  "Galaxy A20s","Galaxy A21s","Galaxy A22","Galaxy A23","Galaxy A24","Galaxy A25","Galaxy A26",
+  "Galaxy A30s","Galaxy A31","Galaxy A32","Galaxy A33 5G","Galaxy A34 5G","Galaxy A35 5G","Galaxy A36 5G",
+  "Galaxy A50","Galaxy A51","Galaxy A52","Galaxy A52 5G","Galaxy A52s 5G","Galaxy A53 5G","Galaxy A54 5G","Galaxy A55 5G","Galaxy A56 5G",
+  "Galaxy A70","Galaxy A71","Galaxy A72","Galaxy A73 5G",
+  "Galaxy M11","Galaxy M12","Galaxy M21","Galaxy M22","Galaxy M23 5G","Galaxy M31","Galaxy M32","Galaxy M33 5G","Galaxy M34 5G","Galaxy M35 5G",
+  "Galaxy M51","Galaxy M52 5G","Galaxy M53 5G","Galaxy M54 5G","Galaxy M55 5G","Galaxy M55s 5G","Galaxy M56 5G",
+  "Galaxy Note20","Galaxy Note20 Ultra",
+  "Galaxy S20","Galaxy S20+","Galaxy S20 Ultra","Galaxy S20 FE",
+  "Galaxy S21","Galaxy S21+","Galaxy S21 Ultra","Galaxy S21 FE",
+  "Galaxy S22","Galaxy S22+","Galaxy S22 Ultra",
+  "Galaxy S23","Galaxy S23+","Galaxy S23 Ultra","Galaxy S23 FE",
+  "Galaxy S24","Galaxy S24+","Galaxy S24 Ultra","Galaxy S24 FE",
+  "Galaxy S25","Galaxy S25+","Galaxy S25 Ultra","Galaxy S25 Edge","Galaxy S25 FE",
+  "Galaxy Z Flip3","Galaxy Z Flip4","Galaxy Z Flip5","Galaxy Z Flip6","Galaxy Z Flip7",
+  "Galaxy Z Fold3","Galaxy Z Fold4","Galaxy Z Fold5","Galaxy Z Fold6","Galaxy Z Fold7"
+ ],
+ Xiaomi:[
+  "Mi 10T","Mi 10T Pro","Mi 11","Mi 11 Lite","Mi 11 Lite 5G NE",
+  "12","12 Lite","12 Pro","12T","12T Pro",
+  "13","13 Lite","13 Pro","13 Ultra","13T","13T Pro",
+  "14","14 Civi","14 Ultra","14T","14T Pro",
+  "15","15 Ultra","15T","15T Pro","17","17 Ultra"
+ ],
+ Realme:[
+  "C11 (2021)","C20","C21","C21Y","C25","C25s","C30","C30s","C31","C33","C35","C51","C53","C55","C61","C63","C65","C67","C75",
+  "7","7 Pro","8","8 5G","8 Pro","9","9 5G","9 Pro+","10","10 Pro","10 Pro+",
+  "11","11 Pro","11 Pro+","12","12+","12 Pro","12 Pro+","13","13+","13 Pro","14 5G","14 Pro+","15","15 Pro",
+  "GT Master Edition","GT 2","GT 2 Pro","GT 3","GT 5 Pro","GT 6","GT 7 Pro",
+  "Narzo 30","Narzo 50","Narzo 50A","Narzo 60","Narzo 70"
+ ],
+ Redmi:[
+  "9","9A","9C","9T","10","10A","10C","10 Prime","12","12C","13","13C","14C","15","15C",
+  "A1","A1+","A2","A2+","A3","A3x","A5",
+  "Note 9","Note 9S","Note 9 Pro","Note 10","Note 10S","Note 10 Pro","Note 10 Pro Max",
+  "Note 11","Note 11S","Note 11 Pro","Note 11 Pro 5G","Note 12","Note 12 5G","Note 12S","Note 12 Pro","Note 12 Pro+",
+  "Note 13","Note 13 5G","Note 13 Pro","Note 13 Pro 5G","Note 13 Pro+",
+  "Note 14","Note 14 5G","Note 14 Pro","Note 14 Pro 5G","Note 14 Pro+",
+  "Note 15","Note 15 Pro","Note 15 Pro+"
+ ],
+ LG:[
+  "K22","K22+","K31","K41S","K50S","K51S","K52","K61","K62","K62+","K71",
+  "Velvet","Wing","V60 ThinQ"
+ ],
+ Motorola:[
+  "Moto E (2020)","Moto E6i","Moto E7","Moto E7 Plus","Moto E20","Moto E22","Moto E22i","Moto E32","Moto E32s","Moto E40","Moto E13","Moto E14","Moto E15","Moto E22s",
+  "Moto G8 Power Lite","Moto G8 Plus","Moto G9 Play","Moto G9 Plus","Moto G9 Power",
+  "Moto G10","Moto G20","Moto G30","Moto G31","Moto G41","Moto G50","Moto G60","Moto G71 5G","Moto G82 5G","Moto G100","Moto G200 5G",
+  "Moto G22","Moto G32","Moto G42","Moto G52","Moto G53 5G","Moto G54 5G","Moto G62 5G","Moto G72","Moto G73 5G","Moto G84 5G",
+  "Moto G04","Moto G04s","Moto G05","Moto G14","Moto G15","Moto G24","Moto G24 Power","Moto G34 5G","Moto G35 5G","Moto G45 5G","Moto G55 5G","Moto G75 5G","Moto G85 5G",
+  "Moto G06","Moto G06 Power","Moto G56 5G","Moto G86 5G",
+  "Edge 20 Lite","Edge 20","Edge 20 Pro","Edge 30 Neo","Edge 30","Edge 30 Fusion","Edge 30 Pro","Edge 30 Ultra",
+  "Edge 40 Neo","Edge 40","Edge 40 Pro",
+  "Edge 50 Neo","Edge 50 Fusion","Edge 50 Pro","Edge 50 Ultra",
+  "Edge 60 Fusion","Edge 60","Edge 60 Pro","Edge 60 Stylus",
+  "One Fusion","One Fusion+","One Hyper","One Vision"
+ ]
 };
 Object.entries(ANDROID).forEach(([br,l]) => l.forEach(x => MODELS.push({m:br+" "+x,t:null,s:null,b:null,br})));
 // ======================================
@@ -254,12 +307,12 @@ $("#hours").innerHTML = [1,2,3,4,5,6,0].map(d => {
 function row(s, m){
   const price = m[s.id];
   const msg = `Olá! Gostaria de um orçamento de ${s.name.toLowerCase()} para o ${m.m}.`;
-  return `<li class="flex items-center justify-between gap-3 py-2.5 text-sm">
-    <span class="font-medium text-gray-200">${m.m}</span>
-    <span class="flex items-center gap-2">
-      ${price != null ? `<span class="font-bold text-brand-red">${brl(price)}</span>` : `<a href="${waBtn(msg)}" target="_blank" rel="noopener" class="text-xs font-semibold text-gray-400 bg-white/5 px-2.5 py-1 rounded-md hover:text-white transition-colors">Consultar</a>`}
-      <a href="${waBtn(msg)}" target="_blank" rel="noopener" class="text-xs font-bold px-2.5 py-1 rounded-md bg-green-500/10 text-green-400 border border-green-500/20 hover:bg-green-500/20">Orçar</a>
-    </span></li>`;
+  return `<li class="group flex min-w-0 flex-col justify-between gap-4 rounded-xl border border-white/10 bg-gradient-to-br from-white/[0.045] to-transparent p-4 shadow-sm shadow-black/20 transition-all hover:-translate-y-0.5 hover:border-brand-red/40 hover:shadow-lg hover:shadow-brand-red/5">
+    <h5 class="font-semibold text-sm text-white"><a href="${waBtn(msg)}" target="_blank" rel="noopener" class="transition-colors hover:text-brand-red focus-visible:outline-none focus-visible:text-brand-red">${m.m}</a></h5>
+    <div class="flex items-center justify-between gap-2">
+      ${price != null ? `<span class="font-bold text-brand-red">${brl(price)}</span>` : `<span class="text-[11px] text-gray-400">Preço sob consulta</span>`}
+      <a href="${waBtn(msg)}" target="_blank" rel="noopener" class="shrink-0 text-xs font-bold px-3 py-2 rounded-lg bg-green-500/10 text-green-400 border border-green-500/20 transition-colors hover:bg-green-500/20">Orçar</a>
+    </div></li>`;
 }
 function list(s, br, query = "", showAll = false){
   const normalizedQuery = query.trim().toLocaleLowerCase("pt-BR");
@@ -270,18 +323,37 @@ function list(s, br, query = "", showAll = false){
   if(!models.length) return `<p class="py-6 text-center text-sm text-gray-400">Nenhum modelo encontrado.</p>`;
   const groups = new Map();
   models.forEach(m => groups.set(m.br, [...(groups.get(m.br) || []), m]));
-  const visible = normalizedQuery || showAll
+  const visible = br || normalizedQuery || showAll
     ? models
     : [...groups.values()].flatMap(group => group.slice(0, 2));
   const visibleGroups = new Map();
   visible.forEach(m => visibleGroups.set(m.br, [...(visibleGroups.get(m.br) || []), m]));
-  return `<div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">${[...visibleGroups].map(([brand, items]) => `
-    <section class="min-w-0 rounded-2xl border border-brand-border bg-black/20 p-4">
-      <div class="flex items-center justify-between gap-3 mb-2 border-b border-white/5 pb-2">
-        <h4 class="text-xs font-bold uppercase tracking-wider text-gray-400">${brand}</h4>
-        <span class="text-[11px] text-gray-500">${groups.get(brand).length} modelos</span>
+  if(br){
+    return `<section>
+      <div class="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-brand-red/20 bg-gradient-to-r from-brand-red/10 to-transparent p-4">
+        <div class="flex items-center gap-3">
+          <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-red/15 text-sm font-black text-brand-red">${br.slice(0, 1)}</span>
+          <div>
+            <h4 class="text-sm font-bold text-white">${br}</h4>
+            <span class="text-xs text-gray-400">${models.length} modelos disponíveis</span>
+          </div>
+        </div>
+        <button type="button" data-show-brands class="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-gray-300 transition-colors hover:border-brand-red/30 hover:text-white">Todas as marcas</button>
       </div>
-      <ul class="divide-y divide-white/5">${items.map(m => row(s, m)).join("")}</ul>
+      <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">${models.map(m => row(s, m)).join("")}</ul>
+    </section>`;
+  }
+  return `<div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">${[...visibleGroups].map(([brand, items]) => `
+    <section class="min-w-0 rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.04] to-transparent p-4 shadow-lg shadow-black/10 transition-colors hover:border-brand-red/25">
+      <div class="mb-3 flex items-center justify-between gap-3 border-b border-white/10 pb-3">
+        <div class="flex items-center gap-2.5">
+          <span class="h-2 w-2 rounded-full bg-brand-red shadow-sm shadow-brand-red/50"></span>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-white">${brand}</h4>
+        </div>
+        <span class="rounded-full bg-white/5 px-2.5 py-1 text-[10px] font-medium text-gray-400">${groups.get(brand).length} modelos</span>
+      </div>
+      <ul class="grid gap-2 sm:grid-cols-2">${items.map(m => row(s, m)).join("")}</ul>
+      <button type="button" data-show-brand="${brand}" class="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-brand-red transition-colors hover:text-white">Ver modelos da marca <span aria-hidden="true">→</span></button>
     </section>`).join("")}</div>
     ${!normalizedQuery && !showAll && models.length > visible.length
       ? `<button type="button" data-show-all class="mt-5 w-full rounded-xl border border-brand-border bg-white/5 px-4 py-3 text-sm font-semibold text-gray-300 hover:text-white transition-colors">Ver todos os ${models.length} modelos</button>`
@@ -300,6 +372,25 @@ $("#panes").addEventListener("input", e => {
   pane.querySelector("[data-model-list]").innerHTML = list(s, chips ? chips.dataset.selectedBr : "", input.value);
 });
 $("#panes").addEventListener("click", e => {
+  const showBrand = e.target.closest("[data-show-brand]");
+  if(showBrand){
+    const pane = showBrand.closest("[data-pane]"), s = SERVICES.find(x => x.id === pane.dataset.pane);
+    const chips = pane.querySelector("[data-chips]"), brand = showBrand.dataset.showBrand;
+    const brandChip = [...chips.querySelectorAll("[data-br]")].find(button => button.dataset.br === brand);
+    chips.dataset.selectedBr = brand;
+    chips.querySelectorAll("button").forEach(button => button.className = chipCls(button === brandChip));
+    pane.querySelector("[data-model-list]").innerHTML = list(s, brand, pane.querySelector("[data-model-search]").value);
+    return;
+  }
+  const showBrands = e.target.closest("[data-show-brands]");
+  if(showBrands){
+    const pane = showBrands.closest("[data-pane]"), s = SERVICES.find(x => x.id === pane.dataset.pane);
+    const chips = pane.querySelector("[data-chips]");
+    chips.dataset.selectedBr = "";
+    chips.querySelectorAll("button").forEach(button => button.className = chipCls(button.dataset.br === ""));
+    pane.querySelector("[data-model-list]").innerHTML = list(s, "", pane.querySelector("[data-model-search]").value);
+    return;
+  }
   const showAll = e.target.closest("[data-show-all]");
   if(showAll){
     const pane = showAll.closest("[data-pane]"), s = SERVICES.find(x => x.id === pane.dataset.pane);
