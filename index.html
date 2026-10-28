@@ -101,10 +101,32 @@ header{top:env(safe-area-inset-top,0px)}
     <div class="text-center max-w-2xl mx-auto">
       <span class="inline-block px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-brand-red text-white">Tabela Promocional</span>
       <h2 class="mt-4 text-3xl sm:text-4xl font-extrabold tracking-tight">Catálogo de <span class="text-brand-red">Orçamento</span></h2>
-      <p class="mt-3 text-gray-400 text-sm sm:text-base">Modelos agrupados por marca, com alguns exemplos em destaque. Pesquise qualquer modelo para consultar o catálogo completo. Valores de referência; o valor final é confirmado após avaliação gratuita.</p>
+      <p class="mt-3 text-gray-400 text-sm sm:text-base">Escolha o serviço, filtre pelo seu modelo e veja o valor de referência. Se o aparelho estiver como “Sob consulta”, peça pelo WhatsApp. O valor final é confirmado após avaliação gratuita.</p>
     </div>
-    <div id="tabs" class="mt-10 flex flex-wrap justify-center gap-2" role="tablist"></div>
-    <div id="panes"></div>
+    <div class="mt-10 overflow-hidden rounded-3xl border border-brand-border bg-brand-card shadow-xl">
+      <div id="tabs" role="tablist" aria-label="Serviços" class="flex gap-1 overflow-x-auto border-b border-brand-border bg-black/20 p-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"></div>
+      <div class="p-5 sm:p-7">
+        <div id="catHead" class="flex flex-wrap items-center justify-between gap-3"></div>
+        <div id="painelModelos">
+          <div class="mt-5 flex flex-col gap-3 md:flex-row md:items-center">
+            <label class="relative block flex-1">
+              <span class="sr-only">Pesquisar modelo</span>
+              <svg class="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z"/></svg>
+              <input id="busca" type="search" autocomplete="off" placeholder="Pesquisar modelo (ex.: iPhone 13, Galaxy A15)" class="w-full rounded-xl border border-brand-border bg-black/30 py-3 pl-10 pr-4 text-sm text-white placeholder:text-gray-500 focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red">
+            </label>
+            <label class="inline-flex shrink-0 cursor-pointer items-center gap-2.5 text-sm text-gray-300">
+              <input id="soPreco" type="checkbox" class="peer sr-only">
+              <span class="relative h-6 w-11 rounded-full bg-white/10 transition-colors after:absolute after:left-0.5 after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-white after:transition-transform after:content-[''] peer-checked:bg-brand-red peer-checked:after:translate-x-5 peer-focus-visible:ring-2 peer-focus-visible:ring-brand-red"></span>
+              Só com preço
+            </label>
+          </div>
+          <div id="chips" role="group" aria-label="Filtrar por marca" class="mt-3 flex flex-wrap gap-2"></div>
+          <p id="catCount" aria-live="polite" class="mt-5 text-xs text-gray-400"></p>
+          <div id="catList" class="mt-3"></div>
+        </div>
+        <div id="painelOutros" class="mt-5 hidden grid gap-4 sm:grid-cols-2"></div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -173,18 +195,118 @@ const CONFIG = {
   facebook: "",                // opcional
   tiktok:   ""                 // opcional
 };
-// Preços por modelo: t = tampa, s = tela, b = bateria. null = "Consultar".
-const MODELS = [
- ["iPhone XR",250,null,null],["iPhone XS",250,null,null],["iPhone XS Max",260,null,null],
- ["iPhone 11",250,null,null],["iPhone 11 Pro",280,null,null],["iPhone 11 Pro Max",280,null,null],
- ["iPhone SE (2ª geração)",null,null,null],["iPhone 12 mini",null,null,null],["iPhone 12",280,null,null],["iPhone 12 Pro",null,null,null],["iPhone 12 Pro Max",290,null,null],
- ["iPhone 13 mini",null,null,null],["iPhone 13",300,null,null],["iPhone 13 Pro",300,null,null],["iPhone 13 Pro Max",330,null,null],["iPhone SE (3ª geração)",null,null,null],
- ["iPhone 14",300,null,null],["iPhone 14 Plus",null,null,null],["iPhone 14 Pro",350,null,null],["iPhone 14 Pro Max",390,null,null],
- ["iPhone 15",350,null,null],["iPhone 15 Plus",null,null,null],["iPhone 15 Pro",350,null,null],["iPhone 15 Pro Max",390,null,null],
- ["iPhone 16",390,null,null],["iPhone 16 Plus",null,null,null],["iPhone 16e",390,null,null],["iPhone 16 Pro",400,null,null],["iPhone 16 Pro Max",480,null,null],
- ["iPhone 17",390,null,null],["iPhone 17e",390,null,null],["iPhone Air",500,null,null],["iPhone 17 Pro",450,null,null],["iPhone 17 Pro Max",550,null,null]
-].map(([m,t,s,b])=>({m,t,s,b,br:"Apple"}));
-const ANDROID = {
+
+// ============================================================
+//  CATÁLOGO — PARTE 1 de 4 · AJUSTES E SERVIÇOS (abas)
+// ============================================================
+const MODELOS_POR_MARCA = 6;   // quantos modelos cada marca mostra antes de "Ver todos"
+
+// id = nome técnico usado na tabela de preços (PARTE 2).  aba = texto do botão.
+// aPartirDe: valor do selo "A partir de". Apague a linha para calcular sozinho pelo menor preço cadastrado.
+const SERVICOS = [
+ { id:"tampa",     aba:"Tampa Traseira",    titulo:"Troca de Tampa Traseira",     descricao:"Modelos iPhone e Android",                          aPartirDe:80  },
+ { id:"tela",      aba:"Troca de Tela",     titulo:"Troca de Tela",               descricao:"Displays originais e primeira linha premium",       aPartirDe:200 },
+ { id:"bateria",   aba:"Troca de Bateria",  titulo:"Substituição de Bateria",     descricao:"Baterias homologadas com 100% de saúde e garantia", aPartirDe:120 },
+ { id:"conector",  aba:"Conector de Carga", titulo:"Conector de Carga",           descricao:"Reparo do dock de carregamento e dados" },
+ { id:"camera",    aba:"Câmera",            titulo:"Câmera Traseira ou Frontal",  descricao:"Troca de lente trincada ou sensor de foco" },
+ { id:"biometria", aba:"Biometria",         titulo:"Biometria",                   descricao:"Reparo ou substituição do sensor biométrico" }
+];
+
+// ============================================================
+//  CATÁLOGO — PARTE 2 de 4 · PREÇOS  (o que você mais vai editar)
+// ============================================================
+// COMO EDITAR
+//  Preço único ............ "iPhone 13": { tela: 450 },
+//  Várias opções .......... "Motorola Edge 30": { tela: [ ["Nac Soft S/A", 490], ["OLED sem aro", 380] ] },
+//  Ainda sem preço ........ null (ou apague a linha) → aparece "Sob consulta" com botão Orçar
+//  Centavos ............... use ponto: 682.5  → aparece R$ 682,50
+//  Serviços válidos ....... tampa, tela, bateria, conector, camera, biometria
+//  O nome entre aspas deve ser IGUAL ao do catálogo: Apple = "iPhone 13"; demais = "Marca Modelo"
+//  (ex.: "Samsung Galaxy A15"). Se errar a grafia, o console (F12) avisa qual nome não foi encontrado.
+const PRECOS = {
+
+  // ---------- Apple ----------
+  "iPhone XR":              { tampa: 250,  tela: null,  bateria: null },
+  "iPhone XS":              { tampa: 250,  tela: null,  bateria: null },
+  "iPhone XS Max":          { tampa: 260,  tela: null,  bateria: null },
+  "iPhone 11":              { tampa: 250,  tela: null,  bateria: null },
+  "iPhone 11 Pro":          { tampa: 280,  tela: null,  bateria: null },
+  "iPhone 11 Pro Max":      { tampa: 280,  tela: null,  bateria: null },
+  "iPhone SE (2ª geração)": { tampa: null, tela: null,  bateria: null },
+  "iPhone 12 mini":         { tampa: null, tela: null,  bateria: null },
+  "iPhone 12":              { tampa: 280,  tela: null,  bateria: null },
+  "iPhone 12 Pro":          { tampa: null, tela: null,  bateria: null },
+  "iPhone 12 Pro Max":      { tampa: 290,  tela: null,  bateria: null },
+  "iPhone 13 mini":         { tampa: null, tela: null,  bateria: null },
+  "iPhone 13":              { tampa: 300,  tela: null,  bateria: null },
+  "iPhone 13 Pro":          { tampa: 300,  tela: null,  bateria: null },
+  "iPhone 13 Pro Max":      { tampa: 330,  tela: null,  bateria: null },
+  "iPhone SE (3ª geração)": { tampa: null, tela: null,  bateria: null },
+  "iPhone 14":              { tampa: 300,  tela: null,  bateria: null },
+  "iPhone 14 Plus":         { tampa: null, tela: null,  bateria: null },
+  "iPhone 14 Pro":          { tampa: 350,  tela: null,  bateria: null },
+  "iPhone 14 Pro Max":      { tampa: 390,  tela: null,  bateria: null },
+  "iPhone 15":              { tampa: 350,  tela: null,  bateria: null },
+  "iPhone 15 Plus":         { tampa: null, tela: null,  bateria: null },
+  "iPhone 15 Pro":          { tampa: 350,  tela: null,  bateria: null },
+  "iPhone 15 Pro Max":      { tampa: 390,  tela: null,  bateria: null },
+  "iPhone 16":              { tampa: 390,  tela: null,  bateria: null },
+  "iPhone 16 Plus":         { tampa: null, tela: null,  bateria: null },
+  "iPhone 16e":             { tampa: 390,  tela: null,  bateria: null },
+  "iPhone 16 Pro":          { tampa: 400,  tela: null,  bateria: null },
+  "iPhone 16 Pro Max":      { tampa: 480,  tela: null,  bateria: null },
+  "iPhone 17":              { tampa: 390,  tela: null,  bateria: null },
+  "iPhone 17e":             { tampa: 390,  tela: null,  bateria: null },
+  "iPhone Air":             { tampa: 500,  tela: null,  bateria: null },
+  "iPhone 17 Pro":          { tampa: 450,  tela: null,  bateria: null },
+  "iPhone 17 Pro Max":      { tampa: 550,  tela: null,  bateria: null },
+
+  // ---------- Motorola ----------
+  "Motorola Edge 30": {
+    tela:      [ ["NAC SOFT S/A", 490], ["Diamonds sem aro OLED", 380], ["Flex sub LCD", 150] ],
+    bateria:   [ ["ND40 · VEZR", 190] ],
+    conector:  [ ["Similar", 110] ],
+    camera:    80,
+    biometria: 130
+  },
+  "Motorola Edge 30 Neo": {
+    tela:      [ ["NAC SOFT S/A", 682.5], ["Flex sub LCD", 120] ],
+    tampa:     [ ["Preta", 110] ],
+    conector:  [ ["Similar", 110] ],
+    camera:    80
+  },
+  "Motorola Edge 30 Pro": {
+    tela:      [ ["NAC SOFT C/A", 735] ],
+    bateria:   [ ["NA50 · Mechanic", 190], ["NA50 · ROX", 190], ["X30 NR50 · ROX", 190], ["Pro 5G NR50 · ROX", 190] ]
+  },
+  "Motorola Edge 30 Ultra": {
+    tela:      [ ["NAC SOFT C/A", 1207.5] ],
+    conector:  [ ["Similar", 110], ["Original", 130] ]
+  },
+  "Motorola Edge 30 Fusion": {
+    tela:      [ ["NAC SOFT S/A", 665], ["NAC SOFT C/A", 761.25] ],
+    bateria:   [ ["NP44 · Original", 190], ["NP44 · VEZR", 210] ],
+    conector:  [ ["Original", 170] ]
+  }
+};
+
+// ============================================================
+//  CATÁLOGO — PARTE 3 de 4 · OUTROS REPAROS (sempre "sob avaliação")
+// ============================================================
+const OUTROS_REPAROS = [
+ ["Dano por Líquido / Banho Químico", "Desoxidação e secagem completa de placa"],
+ ["Alto-falante e Microfone",         "Limpeza e troca de componentes de áudio"],
+ ["Reparos de Placa e Software",      "Restauração, desbloqueio de loop e micro-solda"],
+ ["Botões e Carcaça",                 "Botão Power, Volume, Action Button e chassi"]
+];
+
+// ============================================================
+//  CATÁLOGO — PARTE 4 de 4 · MARCAS E MODELOS (alimenta o filtro)
+// ============================================================
+// Cada marca é uma lista de modelos. Para ADICIONAR um modelo: escreva o nome entre aspas e vírgula.
+// Para REMOVER: apague o nome. Para criar uma MARCA nova: copie um bloco inteiro (Marca:[ ... ]).
+const MODELOS = {
+ Apple:["iPhone XR","iPhone XS","iPhone XS Max","iPhone 11","iPhone 11 Pro","iPhone 11 Pro Max","iPhone SE (2ª geração)","iPhone 12 mini","iPhone 12","iPhone 12 Pro","iPhone 12 Pro Max","iPhone 13 mini","iPhone 13","iPhone 13 Pro","iPhone 13 Pro Max","iPhone SE (3ª geração)","iPhone 14","iPhone 14 Plus","iPhone 14 Pro","iPhone 14 Pro Max","iPhone 15","iPhone 15 Plus","iPhone 15 Pro","iPhone 15 Pro Max","iPhone 16","iPhone 16 Plus","iPhone 16e","iPhone 16 Pro","iPhone 16 Pro Max","iPhone 17","iPhone 17e","iPhone Air","iPhone 17 Pro","iPhone 17 Pro Max"],
  Samsung:[
   "Galaxy A01","Galaxy A01 Core","Galaxy A02","Galaxy A02s","Galaxy A03","Galaxy A03 Core","Galaxy A03s","Galaxy A04","Galaxy A04e","Galaxy A04s","Galaxy A05","Galaxy A05s","Galaxy A06","Galaxy A07",
   "Galaxy A10s","Galaxy A11","Galaxy A12","Galaxy A13","Galaxy A14","Galaxy A15","Galaxy A16","Galaxy A17",
@@ -245,22 +367,7 @@ const ANDROID = {
   "One Fusion","One Fusion+","One Hyper","One Vision"
  ]
 };
-Object.entries(ANDROID).forEach(([br,l]) => l.forEach(x => MODELS.push({m:br+" "+x,t:null,s:null,b:null,br})));
-// ======================================
 
-const SERVICES = [
- {id:"t",tab:"Tampa Traseira",name:"Troca de Tampa Traseira",sub:"Modelos iPhone e Android",badge:"A partir de R$ 80"},
- {id:"s",tab:"Troca de Tela",name:"Troca de Tela",sub:"Displays originais e primeira linha premium",badge:"A partir de R$ 200"},
- {id:"b",tab:"Troca de Bateria",name:"Substituição de Bateria",sub:"Baterias homologadas com 100% de saúde e garantia",badge:"A partir de R$ 120"}
-];
-const OTHERS = [
- ["Conector de Carga","Reparo do dock de carregamento e dados"],
- ["Câmera Traseira ou Frontal","Troca de lente trincada ou sensor de foco"],
- ["Dano por Líquido / Banho Químico","Desoxidação e secagem completa de placa"],
- ["Alto-falante e Microfone","Limpeza e troca de componentes de áudio"],
- ["Reparos de Placa e Software","Restauração, desbloqueio de loop e micro-solda"],
- ["Botões e Carcaça","Botão Power, Volume, Action Button e chassi"]
-];
 const TRUST = [
  ["Acabamento Seguro","Troca com peças de alta qualidade","M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"],
  ["Checklist Completo","Testes rigorosos antes e após o serviço","M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"],
@@ -269,11 +376,7 @@ const TRUST = [
 const DAYS = ["Domingo","Segunda-feira","Terça-feira","Quarta-feira","Quinta-feira","Sexta-feira","Sábado"];
 const $ = s => document.querySelector(s);
 
-function waLink(msg){
-  return "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(msg || "Olá! Gostaria de pedir um orçamento.");
-}
-function waBtn(msg){ return waLink(msg); }
-function brl(v){ return "R$ " + v.toLocaleString("pt-BR"); }
+function waLink(msg){ return "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(msg || "Olá! Gostaria de pedir um orçamento."); }
 
 // Links gerais de WhatsApp
 document.querySelectorAll("[data-wa]").forEach(a => {
@@ -303,134 +406,102 @@ $("#hours").innerHTML = [1,2,3,4,5,6,0].map(d => {
   if(!open){ el.className = el.className.replace(/green/g,"gray"); }
 })();
 
-// Catálogo
-function row(s, m){
-  const price = m[s.id];
-  const msg = `Olá! Gostaria de um orçamento de ${s.name.toLowerCase()} para o ${m.m}.`;
-  return `<li class="group flex min-w-0 flex-col justify-between gap-4 rounded-xl border border-white/10 bg-gradient-to-br from-white/[0.045] to-transparent p-4 shadow-sm shadow-black/20 transition-all hover:-translate-y-0.5 hover:border-brand-red/40 hover:shadow-lg hover:shadow-brand-red/5">
-    <h5 class="font-semibold text-sm text-white"><a href="${waBtn(msg)}" target="_blank" rel="noopener" class="transition-colors hover:text-brand-red focus-visible:outline-none focus-visible:text-brand-red">${m.m}</a></h5>
-    <div class="flex items-center justify-between gap-2">
-      ${price != null ? `<span class="font-bold text-brand-red">${brl(price)}</span>` : `<span class="text-[11px] text-gray-400">Preço sob consulta</span>`}
-      <a href="${waBtn(msg)}" target="_blank" rel="noopener" class="shrink-0 text-xs font-bold px-3 py-2 rounded-lg bg-green-500/10 text-green-400 border border-green-500/20 transition-colors hover:bg-green-500/20">Orçar</a>
-    </div></li>`;
-}
-function list(s, br, query = "", showAll = false){
-  const normalizedQuery = query.trim().toLocaleLowerCase("pt-BR");
-  const models = MODELS.filter(m =>
-    (!br || m.br === br) &&
-    (!normalizedQuery || m.m.toLocaleLowerCase("pt-BR").includes(normalizedQuery))
-  );
-  if(!models.length) return `<p class="py-6 text-center text-sm text-gray-400">Nenhum modelo encontrado.</p>`;
-  const groups = new Map();
-  models.forEach(m => groups.set(m.br, [...(groups.get(m.br) || []), m]));
-  const visible = br || normalizedQuery || showAll
-    ? models
-    : [...groups.values()].flatMap(group => group.slice(0, 2));
-  const visibleGroups = new Map();
-  visible.forEach(m => visibleGroups.set(m.br, [...(visibleGroups.get(m.br) || []), m]));
-  if(br){
-    return `<section>
-      <div class="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-brand-red/20 bg-gradient-to-r from-brand-red/10 to-transparent p-4">
-        <div class="flex items-center gap-3">
-          <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-red/15 text-sm font-black text-brand-red">${br.slice(0, 1)}</span>
-          <div>
-            <h4 class="text-sm font-bold text-white">${br}</h4>
-            <span class="text-xs text-gray-400">${models.length} modelos disponíveis</span>
-          </div>
-        </div>
-        <button type="button" data-show-brands class="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-gray-300 transition-colors hover:border-brand-red/30 hover:text-white">Todas as marcas</button>
-      </div>
-      <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">${models.map(m => row(s, m)).join("")}</ul>
-    </section>`;
-  }
-  return `<div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">${[...visibleGroups].map(([brand, items]) => `
-    <section class="min-w-0 rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.04] to-transparent p-4 shadow-lg shadow-black/10 transition-colors hover:border-brand-red/25">
-      <div class="mb-3 flex items-center justify-between gap-3 border-b border-white/10 pb-3">
-        <div class="flex items-center gap-2.5">
-          <span class="h-2 w-2 rounded-full bg-brand-red shadow-sm shadow-brand-red/50"></span>
-          <h4 class="text-xs font-bold uppercase tracking-wider text-white">${brand}</h4>
-        </div>
-        <span class="rounded-full bg-white/5 px-2.5 py-1 text-[10px] font-medium text-gray-400">${groups.get(brand).length} modelos</span>
-      </div>
-      <ul class="grid gap-2 sm:grid-cols-2">${items.map(m => row(s, m)).join("")}</ul>
-      <button type="button" data-show-brand="${brand}" class="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-brand-red transition-colors hover:text-white">Ver modelos da marca <span aria-hidden="true">→</span></button>
-    </section>`).join("")}</div>
-    ${!normalizedQuery && !showAll && models.length > visible.length
-      ? `<button type="button" data-show-all class="mt-5 w-full rounded-xl border border-brand-border bg-white/5 px-4 py-3 text-sm font-semibold text-gray-300 hover:text-white transition-colors">Ver todos os ${models.length} modelos</button>`
-      : ""}`;
-}
-const chipCls = on => "px-3.5 py-1.5 rounded-full text-xs transition-all " + (on ? "bg-brand-red text-white font-bold" : "border border-brand-border bg-white/5 text-gray-400 hover:text-white font-semibold");
-function chips(s){
-  const bs = ["Todas", ...new Set(MODELS.map(m => m.br))];
-  return `<div class="flex flex-wrap gap-2 mb-5" data-chips="${s.id}" data-selected-br="">${bs.map((b,i) => `<button data-br="${i ? b : ""}" class="${chipCls(i === 0)}">${b}</button>`).join("")}</div>`;
-}
-$("#panes").addEventListener("input", e => {
-  const input = e.target.closest("[data-model-search]");
-  if(!input) return;
-  const pane = input.closest("[data-pane]"), s = SERVICES.find(x => x.id === pane.dataset.pane);
-  const chips = pane.querySelector("[data-chips]");
-  pane.querySelector("[data-model-list]").innerHTML = list(s, chips ? chips.dataset.selectedBr : "", input.value);
-});
-$("#panes").addEventListener("click", e => {
-  const showBrand = e.target.closest("[data-show-brand]");
-  if(showBrand){
-    const pane = showBrand.closest("[data-pane]"), s = SERVICES.find(x => x.id === pane.dataset.pane);
-    const chips = pane.querySelector("[data-chips]"), brand = showBrand.dataset.showBrand;
-    const brandChip = [...chips.querySelectorAll("[data-br]")].find(button => button.dataset.br === brand);
-    chips.dataset.selectedBr = brand;
-    chips.querySelectorAll("button").forEach(button => button.className = chipCls(button === brandChip));
-    pane.querySelector("[data-model-list]").innerHTML = list(s, brand, pane.querySelector("[data-model-search]").value);
-    return;
-  }
-  const showBrands = e.target.closest("[data-show-brands]");
-  if(showBrands){
-    const pane = showBrands.closest("[data-pane]"), s = SERVICES.find(x => x.id === pane.dataset.pane);
-    const chips = pane.querySelector("[data-chips]");
-    chips.dataset.selectedBr = "";
-    chips.querySelectorAll("button").forEach(button => button.className = chipCls(button.dataset.br === ""));
-    pane.querySelector("[data-model-list]").innerHTML = list(s, "", pane.querySelector("[data-model-search]").value);
-    return;
-  }
-  const showAll = e.target.closest("[data-show-all]");
-  if(showAll){
-    const pane = showAll.closest("[data-pane]"), s = SERVICES.find(x => x.id === pane.dataset.pane);
-    const chips = pane.querySelector("[data-chips]");
-    pane.querySelector("[data-model-list]").innerHTML = list(s, chips ? chips.dataset.selectedBr : "", pane.querySelector("[data-model-search]").value, true);
-    return;
-  }
-  const c = e.target.closest("[data-br]"); if(!c) return;
-  const w = c.closest("[data-chips]"), s = SERVICES.find(x => x.id === w.dataset.chips);
-  w.dataset.selectedBr = c.dataset.br;
-  w.querySelectorAll("button").forEach(b => b.className = chipCls(b === c));
-  w.nextElementSibling.innerHTML = list(s, c.dataset.br, w.parentElement.querySelector("[data-model-search]").value);
-});
-const tabs = [...SERVICES.map(s => ({id:s.id, label:s.tab})), {id:"o", label:"Outros Reparos"}];
-$("#tabs").innerHTML = tabs.map(t => `<button role="tab" data-tab="${t.id}" class="tab-btn px-5 py-2.5 rounded-xl text-sm transition-all">${t.label}</button>`).join("");
-$("#panes").innerHTML = SERVICES.map(s => `
-  <div data-pane="${s.id}" role="tabpanel" class="mt-8"><div class="rounded-3xl border border-brand-border bg-brand-card p-6 sm:p-8 shadow-xl">
-    <div class="mb-6 flex flex-wrap justify-between items-center gap-3 border-b border-brand-border pb-4">
-      <div><h3 class="font-bold text-lg text-white">${s.name}</h3><p class="text-xs text-gray-400">${s.sub}</p></div>
-      ${s.badge ? `<span class="text-xs font-bold text-brand-red bg-brand-red/10 border border-brand-red/30 px-3 py-1.5 rounded-full">${s.badge}</span>` : ""}
-    </div><label class="block mb-5">
-      <span class="sr-only">Pesquisar modelo</span>
-      <input data-model-search="${s.id}" type="search" placeholder="Pesquisar modelo (ex.: iPhone 13, Galaxy A15)" class="w-full rounded-xl border border-brand-border bg-black/30 px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red">
-    </label>${chips(s)}<div data-model-list>${list(s)}</div></div></div>`).join("") + `
-  <div data-pane="o" role="tabpanel" class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-    ${OTHERS.map(([t,d]) => `<a href="${waBtn("Olá! Gostaria de um orçamento para: " + t + ".")}" target="_blank" rel="noopener" class="block rounded-2xl border border-brand-border bg-brand-card p-5 hover:border-brand-red/40 transition-colors">
-      <h4 class="font-bold text-base text-white">${t}</h4><p class="text-xs text-gray-400 mt-1">${d}</p>
-      <p class="mt-4 text-xs font-bold text-brand-red uppercase tracking-wider">Sob consulta · pedir orçamento →</p></a>`).join("")}
-  </div>`;
+// ===== CATÁLOGO: lógica de exibição (normalmente não precisa editar) =====
+const FOCO = "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red";
+const normalizar = t => String(t).toLocaleLowerCase("pt-BR").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9+]/g, "");
+const brl = v => "R$ " + v.toLocaleString("pt-BR", { minimumFractionDigits: Number.isInteger(v) ? 0 : 2, maximumFractionDigits: 2 });
+const nomeCompleto = (marca, modelo) => marca === "Apple" ? modelo : marca + " " + modelo;
 
-function switchTab(id){
-  document.querySelectorAll("[data-pane]").forEach(p => p.classList.toggle("hidden", p.dataset.pane !== id));
-  document.querySelectorAll(".tab-btn").forEach(b => {
-    const on = b.dataset.tab === id;
-    b.setAttribute("aria-selected", on);
-    b.className = "tab-btn px-5 py-2.5 rounded-xl text-sm transition-all " + (on ? "bg-brand-red text-white font-bold" : "border border-brand-border bg-brand-card text-gray-400 hover:text-white font-semibold");
-  });
+const TODOS = Object.entries(MODELOS).flatMap(([marca, lista]) =>
+  lista.map(modelo => { const nome = nomeCompleto(marca, modelo); return { marca, nome, chave: normalizar(nome) }; }));
+const MARCAS = Object.keys(MODELOS);
+{ const nomes = new Set(TODOS.map(m => m.nome));
+  Object.keys(PRECOS).forEach(n => nomes.has(n) || console.warn(`[Catálogo] "${n}" está em PRECOS, mas não existe em MODELOS. Confira a grafia.`)); }
+
+// Devolve as opções de preço de um modelo: [{rotulo, preco}]
+function opcoesDe(nome, servico){
+  const v = PRECOS[nome]?.[servico];
+  if(v == null) return [];
+  return (Array.isArray(v) ? v : [["", v]]).map(([rotulo, preco]) => ({ rotulo, preco }));
 }
-$("#tabs").addEventListener("click", e => { const b = e.target.closest("[data-tab]"); if(b) switchTab(b.dataset.tab); });
-switchTab("t");
+function aPartirDe(s){
+  if(s.aPartirDe != null) return s.aPartirDe;
+  const todos = TODOS.flatMap(m => opcoesDe(m.nome, s.id).map(o => o.preco));
+  return todos.length ? Math.min(...todos) : null;
+}
+const msgOrcamento = (s, nome, rotulo) => `Olá! Gostaria de um orçamento de ${s.titulo.toLowerCase()} para o ${nome}${rotulo ? " (" + rotulo + ")" : ""}.`;
+
+const estado = { servico: SERVICOS[0].id, marca: "", busca: "", soPreco: false, expandidas: new Set() };
+
+function linhaModelo(s, m){
+  const ops = opcoesDe(m.nome, s.id);
+  const preco = o => `<a href="${waLink(msgOrcamento(s, m.nome, o.rotulo))}" target="_blank" rel="noopener" class="shrink-0 rounded-lg border border-brand-red/30 bg-brand-red/10 px-3 py-1.5 text-sm font-bold tabular-nums text-brand-red transition-colors hover:bg-brand-red hover:text-white ${FOCO}">${brl(o.preco)}</a>`;
+  const simples = ops.length === 1 && !ops[0].rotulo;
+  const lado = !ops.length
+    ? `<span class="flex items-center gap-2"><span class="text-xs text-gray-500">Sob consulta</span><a href="${waLink(msgOrcamento(s, m.nome))}" target="_blank" rel="noopener" class="rounded-lg border border-green-500/20 bg-green-500/10 px-3 py-1.5 text-xs font-bold text-green-400 transition-colors hover:bg-green-500/20 ${FOCO}">Orçar</a></span>`
+    : simples ? preco(ops[0]) : "";
+  const detalhes = ops.length && !simples
+    ? `<ul class="mt-2 space-y-1.5">${ops.map(o => `<li class="flex items-center justify-between gap-3"><span class="text-xs text-gray-400">${o.rotulo || "Padrão"}</span>${preco(o)}</li>`).join("")}</ul>` : "";
+  return `<li class="border-b border-white/5 py-3"><div class="flex items-center justify-between gap-3"><span class="text-sm font-semibold text-white">${m.nome}</span>${lado}</div>${detalhes}</li>`;
+}
+
+const chipCls = on => "inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-colors " + FOCO + " " +
+  (on ? "border-brand-red bg-brand-red text-white" : "border-brand-border bg-white/5 text-gray-300 hover:text-white");
+
+function renderTabs(){
+  $("#tabs").innerHTML = [...SERVICOS.map(s => [s.id, s.aba]), ["outros", "Outros Reparos"]].map(([id, aba]) => {
+    const on = id === estado.servico;
+    return `<button type="button" role="tab" aria-selected="${on}" data-tab="${id}" class="shrink-0 rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors ${FOCO} ${on ? "bg-brand-red text-white" : "text-gray-400 hover:bg-white/5 hover:text-white"}">${aba}</button>`;
+  }).join("");
+}
+
+function render(){
+  renderTabs();
+  const outros = estado.servico === "outros";
+  $("#painelModelos").classList.toggle("hidden", outros);
+  $("#painelOutros").classList.toggle("hidden", !outros);
+  const selo = "shrink-0 rounded-full border border-brand-red/30 bg-brand-red/10 px-3 py-1.5 text-xs font-bold text-brand-red";
+  if(outros){
+    $("#catHead").innerHTML = `<div><h3 class="text-lg font-bold text-white">Outros reparos</h3><p class="mt-0.5 text-sm text-gray-400">Valor definido após avaliação gratuita do aparelho.</p></div>`;
+    return;
+  }
+  const s = SERVICOS.find(x => x.id === estado.servico), min = aPartirDe(s), q = normalizar(estado.busca);
+  $("#catHead").innerHTML = `<div><h3 class="text-lg font-bold text-white">${s.titulo}</h3><p class="mt-0.5 text-sm text-gray-400">${s.descricao}</p></div>${min != null ? `<span class="${selo}">A partir de ${brl(min)}</span>` : ""}`;
+
+  // 1) aplica busca + "só com preço"  2) conta por marca (chips)  3) aplica a marca escolhida
+  const base = TODOS.filter(m => (!q || m.chave.includes(q)) && (!estado.soPreco || opcoesDe(m.nome, s.id).length));
+  const contagem = marca => base.filter(m => m.marca === marca).length;
+  $("#chips").innerHTML = [["", "Todas", base.length], ...MARCAS.map(b => [b, b, contagem(b)])].map(([b, rotulo, n]) =>
+    `<button type="button" data-marca="${b}" aria-pressed="${estado.marca === b}" class="${chipCls(estado.marca === b)}">${rotulo}<span class="font-medium opacity-60">${n}</span></button>`).join("");
+
+  const lista = estado.marca ? base.filter(m => m.marca === estado.marca) : base;
+  $("#catCount").textContent = `${lista.length} ${lista.length === 1 ? "modelo encontrado" : "modelos encontrados"}`;
+  if(!lista.length){
+    $("#catList").innerHTML = `<div class="rounded-2xl border border-dashed border-brand-border p-8 text-center"><p class="text-sm text-gray-300">Nenhum modelo encontrado.</p><p class="mt-1 text-xs text-gray-500">Confira o nome ou peça o orçamento direto pelo WhatsApp.</p><a href="${waLink(`Olá! Gostaria de um orçamento de ${s.titulo.toLowerCase()}${estado.busca ? " para o " + estado.busca : ""}.`)}" target="_blank" rel="noopener" class="mt-4 inline-block rounded-lg bg-green-500/10 px-4 py-2 text-xs font-bold text-green-400 hover:bg-green-500/20 ${FOCO}">Chamar no WhatsApp</a></div>`;
+    return;
+  }
+  const grupos = new Map();
+  lista.forEach(m => grupos.set(m.marca, [...(grupos.get(m.marca) || []), m]));
+  const limitar = !estado.marca && !q && !estado.soPreco;
+  $("#catList").innerHTML = [...grupos].map(([marca, itens]) => {
+    const visiveis = limitar && !estado.expandidas.has(marca) ? itens.slice(0, MODELOS_POR_MARCA) : itens;
+    return `<section class="mb-8 last:mb-0">
+      <div class="flex items-baseline justify-between gap-3 border-b border-brand-border pb-2"><h4 class="text-base font-bold text-white">${marca}</h4><span class="text-xs text-gray-400">${itens.length} ${itens.length === 1 ? "modelo" : "modelos"}</span></div>
+      <ul class="grid gap-x-8 sm:grid-cols-2 lg:grid-cols-3">${visiveis.map(m => linhaModelo(s, m)).join("")}</ul>
+      ${visiveis.length < itens.length ? `<button type="button" data-expandir="${marca}" class="mt-3 text-sm font-semibold text-brand-red hover:text-white ${FOCO}">Ver os ${itens.length} modelos de ${marca}</button>` : ""}
+    </section>`;
+  }).join("");
+}
+
+$("#painelOutros").innerHTML = OUTROS_REPAROS.map(([t, d]) =>
+  `<div class="rounded-2xl border border-brand-border bg-black/20 p-5"><h4 class="text-base font-bold text-white">${t}</h4><p class="mt-1 text-xs text-gray-400">${d}</p><a href="${waLink("Olá! Gostaria de um orçamento para: " + t + ".")}" target="_blank" rel="noopener" class="mt-4 inline-block rounded-lg bg-green-500/10 px-3 py-2 text-xs font-bold text-green-400 transition-colors hover:bg-green-500/20 ${FOCO}">Pedir orçamento</a></div>`).join("");
+
+$("#tabs").addEventListener("click", e => { const b = e.target.closest("[data-tab]"); if(b){ estado.servico = b.dataset.tab; render(); } });
+$("#chips").addEventListener("click", e => { const b = e.target.closest("[data-marca]"); if(b){ estado.marca = b.dataset.marca; render(); } });
+$("#catList").addEventListener("click", e => { const b = e.target.closest("[data-expandir]"); if(b){ estado.expandidas.add(b.dataset.expandir); render(); } });
+$("#busca").addEventListener("input", e => { estado.busca = e.target.value; render(); });
+$("#soPreco").addEventListener("change", e => { estado.soPreco = e.target.checked; render(); });
+render();
 
 // Contato
 const ico = {
